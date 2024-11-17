@@ -21,3 +21,6 @@ instance/
 uploads/
 
 output.pdf
+
+collect.py
+temp.py
