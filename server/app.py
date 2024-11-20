@@ -46,4 +46,4 @@ def convert():
         return f"Error: {e}", 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='54.167.36.242', debug=True)
