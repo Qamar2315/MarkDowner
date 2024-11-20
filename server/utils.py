@@ -3,7 +3,6 @@ import markdown2
 
 def markdown_to_pdf(markdown_text, output_filename):
     html = markdown2.markdown(markdown_text, extras=['fenced-code-blocks', 'tables'])  # Include necessary extras
-
     # Wrap HTML with <style> for improved code block rendering
     styled_html = f"""
     <html>
