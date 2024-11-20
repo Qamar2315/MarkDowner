@@ -34,6 +34,7 @@ def convert():
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             uploaded_file.save(filepath)
 
+
             with open(filepath, 'r', encoding='utf-8') as file:
                 markdown_content = file.read()
 
