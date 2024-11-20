@@ -7,6 +7,7 @@ import os
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
+
 UPLOAD_FOLDER = 'uploads'
 
 # Ensure the uploads folder exists
