@@ -26,7 +26,6 @@ def convert():
     try:
         if markdown_text:
             markdown_to_pdf(markdown_text, 'output.pdf')
-            
         elif uploaded_file:
             filename = secure_filename(uploaded_file.filename)
             if not filename.endswith('.md'):
