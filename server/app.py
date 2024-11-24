@@ -9,7 +9,6 @@ CORS(app)  # Enable CORS for all routes
 
 UPLOAD_FOLDER = 'uploads'
 
-
 # Ensure the uploads folder exists
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
