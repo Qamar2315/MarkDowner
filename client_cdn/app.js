@@ -1,31 +1,51 @@
-const http = require('http');
-const fs = require('fs');
-const path = require('path');
+const BASE_URL = "http://127.0.0.1:5000"; // Replace with your actual backend URL
 
-const PORT = 3000;
+const form = document.getElementById("markdown-form");
+const markdownInput = document.getElementById("markdown");
+const fileInput = document.getElementById("file");
+const fileNameDisplay = document.getElementById("file-name");
+const errorMessage = document.getElementById("error-message");
+const convertButton = document.getElementById("convert-button");
 
-// Create the server
-const server = http.createServer((req, res) => {
-  // Serve the `index.html` file for the root URL
-  if (req.url === '/' || req.url === '/index.html') {
-    const filePath = path.join(__dirname, 'index.html');
-    fs.readFile(filePath, (err, data) => {
-      if (err) {
-        res.writeHead(500, { 'Content-Type': 'text/plain' });
-        res.end('500 Internal Server Error');
-      } else {
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(data);
-      }
+// Update file name display
+fileInput?.addEventListener("change", () => {
+  const file = fileInput.files[0];
+  fileNameDisplay.textContent = file ? file.name : "No file selected";
+});
+
+// Handle form submission
+form?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  errorMessage.classList.add("hidden");
+  convertButton.textContent = "Converting...";
+  convertButton.disabled = true;
+
+  const formData = new FormData();
+  const markdown = markdownInput.value;
+  const file = fileInput.files[0];
+
+  if (markdown) formData.append("markdown", markdown);
+  if (file) formData.append("file", file);
+
+  try {
+    const response = await axios.post(`${BASE_URL}/convert`, formData, {
+      responseType: "blob",
+      headers: { "Content-Type": "multipart/form-data" },
     });
-  } else {
-    // Handle 404 for other URLs
-    res.writeHead(404, { 'Content-Type': 'text/plain' });
-    res.end('404 Not Found');
+
+    const url = window.URL.createObjectURL(response.data);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "output.pdf");
+    document.body.appendChild(link);
+    link.click();
+  } catch (error) {
+    console.error("Error converting to PDF:", error);
+    errorMessage.textContent =
+      "Failed to convert Markdown to PDF. Please try again.";
+    errorMessage.classList.remove("hidden");
+  } finally {
+    convertButton.textContent = "Convert to PDF";
+    convertButton.disabled = false;
   }
 });
-
-server.listen(PORT, () => { 
-  console.log(`Server running at http://localhost:${PORT}`);
-});
-
