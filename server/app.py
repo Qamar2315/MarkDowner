@@ -15,6 +15,10 @@ if not os.path.exists(UPLOAD_FOLDER):
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+@app.route('/')
+def index():
+    return "Hello, World!"
+
 @app.route('/convert', methods=['POST'])
 def convert():
     markdown_text = request.form.get('markdown')
