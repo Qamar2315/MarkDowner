@@ -1,4 +1,4 @@
-const BASE_URL = "http://127.0.0.1:5000"; // Replace with your actual backend URL
+const BASE_URL = "http://54.152.178.111:5000"; // Replace with your actual backend URL
 
 const form = document.getElementById("markdown-form");
 const markdownInput = document.getElementById("markdown");
